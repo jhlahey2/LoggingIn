@@ -1,0 +1,37 @@
+
+Logging in
+
+    Due No Due Date Points 0 Submitting a website url
+
+Create an application to allow a user to sign up and log in.
+
+When the user logs in, he/she should be able to see the role(s) that he/she is signed in with.
+
+The application should have the following options:
+
+1. Sign up (you can add user roles when you create a new user, but the roles MUST already exist)
+
+2. Add a new role (e.g. Admin, Editor, Contributor, etc.)
+
+3. Add a role to a user - this option should add a selected role to a user, AS WELL AS adding the user to the role. Make sure the same user cannot be added twice to the same role, and the same role cannot be added twice to the same user.
+
+4. Log in - this should allow a user to log in with their user name / userPassword
+
+
+
+The application should have the following classes: User, Role
+
+The User class should have the following private member variables:
+Name 	Type
+id 	long
+username 	String
+userPassword 	String
+role 	Role (collection)
+
+The Role class should have the following private member variables:
+Name 	Type
+id 	long
+name 	String
+User 	User (collection)
+
+
