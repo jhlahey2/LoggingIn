@@ -10,7 +10,6 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner inputScanner = new Scanner(System.in);
-//        HashSet loggedOnUsers = new HashSet<User>();
         HashSet allCurrentUsers = new HashSet<User>();
         HashSet allCurrentRoles = new HashSet<Role>();
         int iMenuQuit = 8;
@@ -50,15 +49,33 @@ public class Main {
                     break;
                 case 3:
                     System.out.println("Add a Role");
-                    addNewRole(inputScanner, allCurrentRoles);
+                    if( currentUserIsAuthorized() ){
+
+                        addNewRole(inputScanner, allCurrentRoles);
+                    }
+                    else {
+                        System.out.println("You must be logged on as an Administrator to use this function!");
+                    }
                     break;
                 case 4:
                     System.out.println("Add a User");
-                    addNewUser(inputScanner, allCurrentUsers);
+                    if( currentUserIsAuthorized() ){
+
+                        addNewUser(inputScanner, allCurrentUsers);
+                    }
+                    else {
+                        System.out.println("You must be logged on as an Administrator to use this function!");
+                    }
                     break;
                 case 5:
                     System.out.println("Link User and Role");
+                    if( currentUserIsAuthorized() ){
 
+                        linkUserAndRole(inputScanner, allCurrentRoles, allCurrentUsers);
+                    }
+                    else {
+                        System.out.println("You must be logged on as an Administrator to use this function!");
+                    }
                     break;
                 case 6:
                     System.out.println("Log In");
@@ -81,6 +98,32 @@ public class Main {
 
     }//end public static void main(String[] args)
 
+
+    /**
+     * Checks to see whether the current user logged on has an Administrator role
+     *
+     * @return returns true if there is a user logged on and that user is an administrator, otherwise returns false
+     */
+    public static boolean currentUserIsAuthorized(){
+
+        if( !(currentUser == null) ){
+
+            HashSet roleSet = currentUser.getRoleSet();
+            if( roleSet.contains(Administrator.getInstance()) ){
+
+                return true;
+            }
+        }//end if( !(currentUser == null) )
+
+        return false;
+    }
+
+
+    /**
+     * displays all users
+     *
+     * @param allUsers
+     */
     public static void displayAllCurrentUsers(HashSet<User> allUsers ){
 
         for(User user : allUsers){
@@ -90,6 +133,12 @@ public class Main {
 
     }//end public static void displayAllUsers()
 
+
+    /**
+     * displays a single user and associated roles
+     *
+     * @param user
+     */
     public static void displaySingleUser(User user){
 
         String sPrefix = "";
@@ -111,6 +160,11 @@ public class Main {
 
     }//end public static void displaySingleUser()
 
+
+    /**
+     * displays all Current roles
+     * @param allCurrentRoles
+     */
     public static void displayAllCurrentRoles(HashSet<Role> allCurrentRoles){
 
         for(Role role : allCurrentRoles){
@@ -121,6 +175,11 @@ public class Main {
     }//end public static void displayAllCurrentRoles()
 
 
+    /**
+     * displays a role and associated users
+     *
+     * @param role
+     */
     public static void displaySingleRole(Role role){
 
         String sPrefix = "";
@@ -142,14 +201,14 @@ public class Main {
 
     }//end public static void displaySingleRole(Role role)
 
-    public static void linkUserAndRole(Scanner inputScan){
 
-
-
-
-
-    }
-
+    /**
+     * Allows Administrator to add a role to a user
+     *
+     * @param inputScan
+     * @param allCurrentRoles
+     * @param allCurrentUsers
+     */
     public static void linkUserAndRole(Scanner inputScan, HashSet<Role> allCurrentRoles, HashSet<User> allCurrentUsers){
 
         int iQuit = 5;
@@ -168,7 +227,6 @@ public class Main {
                 "3. Add Editor Role\n" +
                 "4. Add Janitor Role\n" +
                 "5. Quit";
-        String sMenuYesNo = "Do you want to add another Role?  Enter \"Y\" or \"N\"";
 
         System.out.println("Enter User Name");
         sInputName = inputScan.nextLine();
@@ -181,12 +239,25 @@ public class Main {
                 displaySingleUser(theUser);
                 bFoundUser = true;
 
-                for(Role role : allCurrentRoles){
+            }//end if(user.getUserName().equalsIgnoreCase(sInputName))
 
-                    System.out.printf("Do you want to add %s role to this user?  Enter \"Y\" or \"N\" ", role);
+        }//end for(User user : allCurrentUsers)
+
+        if( !bFoundUser ){
+
+            System.out.printf("User %s was not found\n",sInputName );
+        }
+        else{
+
+            HashSet roleSet = theUser.getRoleSet();
+
+            for(Role role : allCurrentRoles){
+
+                if( !roleSet.contains(role) ){
+
+                    System.out.printf("Do you want to add Role: %s  to User: %s?  Enter \"Y\" or \"N\"\n", role.getRoleName(), theUser.getUserName());
 
                     do{
-//                        System.out.println(sMenuYesNo);
                         sInput = inputScan.nextLine();
                         if(sInput.equalsIgnoreCase(sMenuYes)){
 
@@ -202,19 +273,23 @@ public class Main {
                             System.out.println("Please enter \"Y\" or \"N\" ");
                         }
 
-
-
                     }while( !(sInput.equalsIgnoreCase(sMenuYes)) && !(sInput.equalsIgnoreCase(sMenuNo)));
 
-                }//end for(Role role : allCurrentRoles)
+                }//end if( !roleSet.contains(role) )
 
-            }//end if(user.getUserName().equalsIgnoreCase(sInputName))
+            }//end for(Role role : allCurrentRoles){
 
-        }//end for(User user : allCurrentUsers)
+        }//end if( !bFoundUser )
 
     }//end public static void addNewRole(HashSet allCurrentRoles)
 
 
+    /**
+     * Allows Administrator to add a role to the set of Current Roles
+     *
+     * @param inputScan
+     * @param allCurrentRoles
+     */
     public static void addNewRole(Scanner inputScan, HashSet<Role> allCurrentRoles){
 
         int iQuit = 5;
@@ -223,7 +298,6 @@ public class Main {
         String sMenuNo = "N";
         String sInput = "";
         boolean bNewRoleAdded = false;
-
 
         String sRoleMenu = "Please make a selection\n" +
                 "1. Add Administrator Role\n" +
@@ -297,6 +371,12 @@ public class Main {
     }//end public static void addNewRole(HashSet allCurrentRoles)
 
 
+    /**
+     *  Allows Administrator to add new user
+     *
+     * @param inputScanner
+     * @param allCurrentUsers
+     */
     public static void addNewUser(Scanner inputScanner, HashSet<User> allCurrentUsers){
 
         String sMenuYes = "Y";
@@ -304,78 +384,82 @@ public class Main {
         String sInput = "";
         String newUserName = "";
         String newUserPassword = "";
+
         User newUser = null;
-        String sMenuYesNo = "Do you want to add another user?  Enter \"Y\" or \"N\"";
 
-        do{
+        System.out.println("Enter user name");
+        newUserName = inputScanner.nextLine();
 
+        if(allCurrentUsers.contains(newUser)){
 
-            System.out.println("Enter user name");
-            newUserName = inputScanner.nextLine();
+            System.out.printf("User %s already exists\n", newUserName);
+        }
+        else{
 
-            for(User temp : allCurrentUsers){
+            System.out.println("Enter user password");
+            newUserPassword = inputScanner.nextLine();
 
-                if ( temp.getUserName().equalsIgnoreCase(newUserName) ) {
+            newUser = new User(newUserName, newUserPassword);
+            allCurrentUsers.add(newUser);
 
-                    System.out.printf("User %s already exists\n", newUserName);
-                }
-                else{
+            System.out.printf("User %s has been added\n\n", newUser.getUserName());
 
-                    System.out.println("Enter user password");
-                    newUserPassword = inputScanner.nextLine();
-
-                    newUser = new User(newUserName, newUserPassword);
-                    allCurrentUsers.add(newUser);
-
-                }//end if ( temp.getUserName().equalsIgnoreCase(newUserName) )
-
-            }//end for(User temp : allCurrentUsers)
-
-
-            do{
-                System.out.println(sMenuYesNo);
-                sInput = inputScanner.nextLine();
-
-            }while( !(sInput.equalsIgnoreCase(sMenuYes)) && !(sInput.equalsIgnoreCase(sMenuNo)));
-
-        }while( !(sInput.equalsIgnoreCase(sMenuNo)));
+        }//end if ( temp.getUserName().equalsIgnoreCase(newUserName) )
 
     }//end public static void addNewUser(Scanner inputScanner, HashSet<User> allCurrentUsers)
 
-    public static boolean logIn(Scanner inputScanner, HashSet<User> allCurrentUsers){
+
+    /**
+     * Authenticates user and password, then logs the user in to the application
+     *
+     * @param inputScanner
+     * @param allCurrentUsers
+     */
+    public static void logIn(Scanner inputScanner, HashSet<User> allCurrentUsers){
 
         String sUser = "";
         String sPassword = "";
 
+        if(!(currentUser == null)){
 
-        System.out.println("Please enter your user name");
-        sUser = inputScanner.nextLine();
+            System.out.printf("You are currently logged in as User \"%s\".  You must log out before you can log in as another user.\n\n", currentUser.getUserName());
+        }
+        else
+        {
+            System.out.println("Please enter your user name");
+            sUser = inputScanner.nextLine();
 
-        if ( User.authenticateUser(sUser) ){
+            if ( User.authenticateUser(sUser) ){
 
-            System.out.println(" Please enter your password");
-            sPassword = inputScanner.nextLine();
+                System.out.println("Please enter your password");
+                sPassword = inputScanner.nextLine();
 
-            User temp = User.authenticateUserPassword(sUser, sPassword, allCurrentUsers);
+                User temp = User.authenticateUserPassword(sUser, sPassword, allCurrentUsers);
 
-            if ( !(temp == null) ){
+                if ( !(temp == null) ){
 
                     currentUser = temp;
 
+                }
+                else
+                {
+                    System.out.println("User Password combination is not valid");
+                }
             }
-            else
-            {
-                System.out.println("Incorrect password");
-            }
-        }
-        else{
+            else{
 
-            System.out.println("User does not exist");
-        }
+                System.out.printf("User: \"%s\" does not exist\n\n", sUser);
 
-        return false;
-    }
+            }//end if ( User.authenticateUser(sUser) )
 
+        }//end if(!(currentUser == null))
+
+    }//end public static void logIn(Scanner inputScanner, HashSet<User> allCurrentUsers)
+
+
+    /**
+     * Logs the user out of the application
+     */
     public static void logOut(){
 
         if( !(currentUser == null) ){
@@ -392,6 +476,12 @@ public class Main {
     }//end public static void logOut()
 
 
+    /**
+     * Initializes data for this application
+     *
+     * @param allCurrentUsers
+     * @param allCurrentRoles
+     */
     public static void initialize(HashSet allCurrentUsers, HashSet allCurrentRoles){
 
         Role administrator = Administrator.getInstance();
@@ -404,8 +494,6 @@ public class Main {
         //User contruct userName password
         User user01 = new User("tom", "password");
         allCurrentUsers.add(user01);
-//        user01.addRole(administrator);
-//        administrator.addUser(user01);
         user01.addRole(contributor);
         contributor.addUser(user01);
         user01.addRole(editor);
@@ -413,19 +501,13 @@ public class Main {
 
         User user02 = new User("ann", "password");
         allCurrentUsers.add(user02);
-//        user02.addRole(administrator);
-//        administrator.addUser(user02);
         user02.addRole(contributor);
         contributor.addUser(user02);
-//        user02.addRole(editor);
-//        editor.addUser(user02);
 
         User user03 = new User("janet", "password");
         allCurrentUsers.add(user03);
         user03.addRole(administrator);
         administrator.addUser(user03);
-//        user03.addRole(contributor);
-//        contributor.addUser(user03);
         user03.addRole(editor);
         editor.addUser(user03);
 

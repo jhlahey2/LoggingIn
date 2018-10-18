@@ -20,7 +20,6 @@ public class User {
     //*************************************************************************
     public static boolean authenticateUser(String sUserName){
 
-
         if( userPasswordMap.containsKey(sUserName)){
 
             return true;
@@ -32,32 +31,38 @@ public class User {
     /**
      * This method returns the user if user name matches user password, otherwise returns null
      *
-     * @param userid
+     * @param userName
      * @param userpassword
      * @param allCurrentUsers
      * @return
      */
-    public static User authenticateUserPassword(String userid, String userpassword, HashSet<User> allCurrentUsers) {
+    public static User authenticateUserPassword(String userName, String userpassword, HashSet<User> allCurrentUsers) {
 
-        String password = userPasswordMap.get(userid);
+        if(authenticateUser(userName)){
 
-        if (password.equalsIgnoreCase(userpassword)) {
+            String password = userPasswordMap.get(userName);
 
-            for (User temp : allCurrentUsers){
+            if (password.equalsIgnoreCase(userpassword)) {
 
-                if(temp.getUserName().equalsIgnoreCase(userpassword)){
+                for (User temp : allCurrentUsers){
 
-                    return temp;
+                    if(temp.getUserName().equalsIgnoreCase(userName)){
+
+                        return temp;
+                    }
                 }
-            }
 
-        }//end if (password.equalsIgnoreCase(userpassword))
+            }//end if (password.equalsIgnoreCase(userpassword))
+
+        }//end if(authenticateUser(userName))
 
         return null;
 
     }//end public static User authenticateUserPassword(String userid, String userpassword)
+
+
     //*************************************************************************
-    //* Constructors
+    //* Constructor
     //*************************************************************************
     public User(String sName, String sPassword){
 
