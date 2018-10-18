@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f1636de9-d405-4b88-9e12-fef85526d290" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/LoggingIn/com/lahey/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/LoggingIn/com/lahey/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/lahey/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/lahey/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/lahey/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/lahey/User.java" afterDir="false" />
     </list>
@@ -22,12 +24,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="1330" />
+          <entry key="java" value="2960" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="1330" />
+          <entry key="JAVA" value="2960" />
         </counts>
       </usages-collector>
     </session>
@@ -46,8 +48,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/lahey/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="922">
-              <caret line="237" column="44" lean-forward="true" selection-start-line="237" selection-start-column="44" selection-end-line="237" selection-end-column="44" />
+            <state relative-caret-position="208">
+              <caret line="315" selection-start-line="315" selection-end-line="315" />
             </state>
           </provider>
         </entry>
@@ -100,8 +102,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/lahey/User.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="31" column="47" lean-forward="true" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="47" />
+            <state relative-caret-position="378">
+              <caret line="56" selection-start-line="56" selection-end-line="56" />
             </state>
           </provider>
         </entry>
@@ -140,8 +142,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="2012" />
-    <option name="y" value="5" />
+    <option name="x" value="2013" />
+    <option name="y" value="39" />
     <option name="width" value="1616" />
     <option name="height" value="970" />
   </component>
@@ -182,7 +184,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539823048892" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539863110270" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
@@ -230,15 +232,15 @@
       <option name="presentableId" value="Default" />
       <updated>1539781919865</updated>
       <workItem from="1539781928917" duration="22593000" />
-      <workItem from="1539815149435" duration="6819000" />
+      <workItem from="1539815149435" duration="14356000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29412000" />
+    <option name="totallyTimeSpent" value="36949000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2012" y="5" width="1616" height="970" extended-state="0" />
+    <frame x="2013" y="39" width="1616" height="970" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Capture Tool" order="0" />
@@ -250,12 +252,12 @@
       <window_info id="Image Layers" order="6" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="0" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Messages" order="1" visible="true" weight="0.32748538" />
+      <window_info anchor="bottom" id="Messages" order="1" weight="0.32748538" />
       <window_info anchor="bottom" id="Version Control" order="2" />
       <window_info anchor="bottom" id="Terminal" order="3" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32903227" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.21052632" />
+      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.21052632" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.41050118" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -323,15 +325,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/lahey/User.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="31" column="47" lean-forward="true" selection-start-line="31" selection-start-column="24" selection-end-line="31" selection-end-column="47" />
+        <state relative-caret-position="378">
+          <caret line="56" selection-start-line="56" selection-end-line="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/lahey/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="922">
-          <caret line="237" column="44" lean-forward="true" selection-start-line="237" selection-start-column="44" selection-end-line="237" selection-end-column="44" />
+        <state relative-caret-position="208">
+          <caret line="315" selection-start-line="315" selection-end-line="315" />
         </state>
       </provider>
     </entry>

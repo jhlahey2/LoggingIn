@@ -54,16 +54,19 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("Add a User");
+                    addNewUser(inputScanner, allCurrentUsers);
                     break;
                 case 5:
                     System.out.println("Link User and Role");
+
                     break;
                 case 6:
                     System.out.println("Log In");
-
+                    logIn(inputScanner, allCurrentUsers);
                     break;
                 case 7:
                     System.out.println("Log Out");
+                    logOut();
                     break;
                 case 8:
                     System.out.println("Quit");
@@ -139,12 +142,80 @@ public class Main {
 
     }//end public static void displaySingleRole(Role role)
 
-    public static void linkUserAndRole(User user, Role role){
+    public static void linkUserAndRole(Scanner inputScan){
+
+
+
 
 
     }
 
-    public static void addNewRole(Scanner inputScan, HashSet allCurrentRoles){
+    public static void linkUserAndRole(Scanner inputScan, HashSet<Role> allCurrentRoles, HashSet<User> allCurrentUsers){
+
+        int iQuit = 5;
+        int iSelection = 0;
+        String sMenuYes = "Y";
+        String sMenuNo = "N";
+        String sInput = "";
+        String sInputName = "";
+        boolean bNewRoleAdded = false;
+        boolean bFoundUser = false;
+        User theUser = null;
+
+        String sRoleMenu = "Please make a selection\n" +
+                "1. Add Administrator Role\n" +
+                "2. Add Contributor Role\n" +
+                "3. Add Editor Role\n" +
+                "4. Add Janitor Role\n" +
+                "5. Quit";
+        String sMenuYesNo = "Do you want to add another Role?  Enter \"Y\" or \"N\"";
+
+        System.out.println("Enter User Name");
+        sInputName = inputScan.nextLine();
+
+        for(User user : allCurrentUsers){
+
+            if(user.getUserName().equalsIgnoreCase(sInputName)){
+
+                theUser = user;
+                displaySingleUser(theUser);
+                bFoundUser = true;
+
+                for(Role role : allCurrentRoles){
+
+                    System.out.printf("Do you want to add %s role to this user?  Enter \"Y\" or \"N\" ", role);
+
+                    do{
+//                        System.out.println(sMenuYesNo);
+                        sInput = inputScan.nextLine();
+                        if(sInput.equalsIgnoreCase(sMenuYes)){
+
+                            theUser.addRole(role);
+                            role.addUser(theUser);
+                        }
+                        else if(sInput.equalsIgnoreCase(sMenuNo)){
+
+                            //do nothing
+                        }
+                        else{
+
+                            System.out.println("Please enter \"Y\" or \"N\" ");
+                        }
+
+
+
+                    }while( !(sInput.equalsIgnoreCase(sMenuYes)) && !(sInput.equalsIgnoreCase(sMenuNo)));
+
+                }//end for(Role role : allCurrentRoles)
+
+            }//end if(user.getUserName().equalsIgnoreCase(sInputName))
+
+        }//end for(User user : allCurrentUsers)
+
+    }//end public static void addNewRole(HashSet allCurrentRoles)
+
+
+    public static void addNewRole(Scanner inputScan, HashSet<Role> allCurrentRoles){
 
         int iQuit = 5;
         int iSelection = 0;
@@ -154,7 +225,7 @@ public class Main {
         boolean bNewRoleAdded = false;
 
 
-        String sSubMenu = "Please make a selection\n" +
+        String sRoleMenu = "Please make a selection\n" +
                 "1. Add Administrator Role\n" +
                 "2. Add Contributor Role\n" +
                 "3. Add Editor Role\n" +
@@ -163,7 +234,7 @@ public class Main {
         String sMenuYesNo = "Do you want to add another Role?  Enter \"Y\" or \"N\"";
 
         do{
-            System.out.println(sSubMenu);
+            System.out.println(sRoleMenu);
 
             while( !(inputScan.hasNextInt()) ){
 
@@ -202,7 +273,6 @@ public class Main {
                     break;
             }
 
-
             if( bNewRoleAdded ){
 
                 System.out.println(role.getClass().getSimpleName() + " has been added!\n");
@@ -226,7 +296,53 @@ public class Main {
 
     }//end public static void addNewRole(HashSet allCurrentRoles)
 
-    public static boolean logIn(Scanner inputScanner){
+
+    public static void addNewUser(Scanner inputScanner, HashSet<User> allCurrentUsers){
+
+        String sMenuYes = "Y";
+        String sMenuNo = "N";
+        String sInput = "";
+        String newUserName = "";
+        String newUserPassword = "";
+        User newUser = null;
+        String sMenuYesNo = "Do you want to add another user?  Enter \"Y\" or \"N\"";
+
+        do{
+
+
+            System.out.println("Enter user name");
+            newUserName = inputScanner.nextLine();
+
+            for(User temp : allCurrentUsers){
+
+                if ( temp.getUserName().equalsIgnoreCase(newUserName) ) {
+
+                    System.out.printf("User %s already exists\n", newUserName);
+                }
+                else{
+
+                    System.out.println("Enter user password");
+                    newUserPassword = inputScanner.nextLine();
+
+                    newUser = new User(newUserName, newUserPassword);
+                    allCurrentUsers.add(newUser);
+
+                }//end if ( temp.getUserName().equalsIgnoreCase(newUserName) )
+
+            }//end for(User temp : allCurrentUsers)
+
+
+            do{
+                System.out.println(sMenuYesNo);
+                sInput = inputScanner.nextLine();
+
+            }while( !(sInput.equalsIgnoreCase(sMenuYes)) && !(sInput.equalsIgnoreCase(sMenuNo)));
+
+        }while( !(sInput.equalsIgnoreCase(sMenuNo)));
+
+    }//end public static void addNewUser(Scanner inputScanner, HashSet<User> allCurrentUsers)
+
+    public static boolean logIn(Scanner inputScanner, HashSet<User> allCurrentUsers){
 
         String sUser = "";
         String sPassword = "";
@@ -240,11 +356,12 @@ public class Main {
             System.out.println(" Please enter your password");
             sPassword = inputScanner.nextLine();
 
-            User temp = User.authenticateUserPassword(sUser, sPassword);
+            User temp = User.authenticateUserPassword(sUser, sPassword, allCurrentUsers);
 
             if ( !(temp == null) ){
 
                     currentUser = temp;
+
             }
             else
             {
@@ -259,6 +376,21 @@ public class Main {
         return false;
     }
 
+    public static void logOut(){
+
+        if( !(currentUser == null) ){
+
+            String name = currentUser.getUserName();
+            currentUser = null;
+            System.out.println(name + " is now logged out.\n");
+        }
+        else{
+
+            System.out.println("You can't log out because you aren't logged in.");
+        }
+
+    }//end public static void logOut()
+
 
     public static void initialize(HashSet allCurrentUsers, HashSet allCurrentRoles){
 
@@ -270,7 +402,7 @@ public class Main {
         allCurrentRoles.add(editor);
 
         //User contruct userName password
-        User user01 = new User("Tom", "password");
+        User user01 = new User("tom", "password");
         allCurrentUsers.add(user01);
 //        user01.addRole(administrator);
 //        administrator.addUser(user01);
@@ -279,7 +411,7 @@ public class Main {
         user01.addRole(editor);
         editor.addUser(user01);
 
-        User user02 = new User("Ann", "password");
+        User user02 = new User("ann", "password");
         allCurrentUsers.add(user02);
 //        user02.addRole(administrator);
 //        administrator.addUser(user02);
@@ -288,7 +420,7 @@ public class Main {
 //        user02.addRole(editor);
 //        editor.addUser(user02);
 
-        User user03 = new User("Janet", "password");
+        User user03 = new User("janet", "password");
         allCurrentUsers.add(user03);
         user03.addRole(administrator);
         administrator.addUser(user03);

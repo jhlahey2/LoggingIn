@@ -29,14 +29,32 @@ public class User {
         return false;
     }
 
-    public static User authenticateUserPassword(String userid, String userpassword) {
+    /**
+     * This method returns the user if user name matches user password, otherwise returns null
+     *
+     * @param userid
+     * @param userpassword
+     * @param allCurrentUsers
+     * @return
+     */
+    public static User authenticateUserPassword(String userid, String userpassword, HashSet<User> allCurrentUsers) {
 
         String password = userPasswordMap.get(userid);
 
         if (password.equalsIgnoreCase(userpassword)) {
 
-            return null;
-        }
+            for (User temp : allCurrentUsers){
+
+                if(temp.getUserName().equalsIgnoreCase(userpassword)){
+
+                    return temp;
+                }
+            }
+
+        }//end if (password.equalsIgnoreCase(userpassword))
+
+        return null;
+
     }//end public static User authenticateUserPassword(String userid, String userpassword)
     //*************************************************************************
     //* Constructors
