@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static User currentUser = null;
 
     public static void main(String[] args) {
 
@@ -59,6 +60,7 @@ public class Main {
                     break;
                 case 6:
                     System.out.println("Log In");
+
                     break;
                 case 7:
                     System.out.println("Log Out");
@@ -178,27 +180,19 @@ public class Main {
 
                 case 1:
                     role = Administrator.getInstance();
-                    if( allCurrentRoles.add(role) ){
-                        bNewRoleAdded = true;
-                    }
+                    bNewRoleAdded = allCurrentRoles.add(role);
                     break;
                 case 2:
                     role = Contributor.getInstance();
-                    if( allCurrentRoles.add(role) ){
-                        bNewRoleAdded = true;
-                    }
+                    bNewRoleAdded = allCurrentRoles.add(role);
                     break;
                 case 3:
                     role = Editor.getInstance();
-                    if( allCurrentRoles.add(role) ){
-                        bNewRoleAdded = true;
-                    }
+                    bNewRoleAdded = allCurrentRoles.add(role);
                     break;
                 case 4:
                     role = Janitor.getInstance();
-                    if( allCurrentRoles.add(role) ){
-                        bNewRoleAdded = true;
-                    }
+                    bNewRoleAdded = allCurrentRoles.add(role);
                     break;
                 case 5:
                     System.out.println("Quit");
@@ -209,13 +203,13 @@ public class Main {
             }
 
 
-            if( !(role == null) ){
+            if( bNewRoleAdded ){
 
-                System.out.println(role.getClass().getSimpleName() + " has been added!");
+                System.out.println(role.getClass().getSimpleName() + " has been added!\n");
             }
             else {
 
-                System.out.println(role.getClass().getSimpleName() + " was ALREADY added!");
+                System.out.println(role.getClass().getSimpleName() + " was ALREADY added!\n");
             }
 
             do{
@@ -232,10 +226,38 @@ public class Main {
 
     }//end public static void addNewRole(HashSet allCurrentRoles)
 
-//    public static User logIn(){
-//
-//        return foundUser;
-//    }
+    public static boolean logIn(Scanner inputScanner){
+
+        String sUser = "";
+        String sPassword = "";
+
+
+        System.out.println("Please enter your user name");
+        sUser = inputScanner.nextLine();
+
+        if ( User.authenticateUser(sUser) ){
+
+            System.out.println(" Please enter your password");
+            sPassword = inputScanner.nextLine();
+
+            User temp = User.authenticateUserPassword(sUser, sPassword);
+
+            if ( !(temp == null) ){
+
+                    currentUser = temp;
+            }
+            else
+            {
+                System.out.println("Incorrect password");
+            }
+        }
+        else{
+
+            System.out.println("User does not exist");
+        }
+
+        return false;
+    }
 
 
     public static void initialize(HashSet allCurrentUsers, HashSet allCurrentRoles){
